@@ -1,399 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CybrJustice | Legal Resources For Everyone</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  
-  <script>
-    window.A = window.A || {};
-    window.A.log = function() {
-      if (console && console.log) {
-        console.log.apply(console, ['[CYBR]'].concat(Array.from(arguments)));
-      }
-    };
-  </script>
-
-  <!-- Core system scripts -->
-  <script src="core/events.js"></script>
-  <script src="core/loader.js"></script>
-  <script src="core/registry.js"></script>
-  <script src="config.js"></script>
-  <script src="secure-config.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CybrJustice | Legal Resources For Everyone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        #truth-modal-bg {
+            display: none;
+            position: fixed; inset: 0;
+            z-index: 9999;
+            background: rgba(0,0,0,0.62);
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(6px);
+            animation: fadeInBg .2s;
+        }
+        #truth-modal {
+            background: #fff;
+            width: 75vw;
+            max-width: 900px;
+            min-width: 320px;
+            max-height: 85vh;
+            min-height: 220px;
+            border-radius: 18px;
+            box-shadow: 0 8px 48px #4448;
+            padding: 28px 18px 18px 18px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            animation: popIn .18s cubic-bezier(.4,1.4,.4,1);
+            overflow-y: auto;
+        }
+        #truth-modal-close {
+            position: absolute; top: 12px; right: 14px;
+            font-size: 1.7em; color: #888; background: none;
+            border: none; cursor: pointer;
+        }
+        #truth-modal h2 {
+            margin: 0 0 16px 0;
+            font-size: 1.35em;
+            font-weight: 600;
+            color: #222;
+        }
+        #truth-modal-query {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #ccc;
+            border-radius: 7px;
+            margin-bottom: 15px;
+            font-size: 1.07em;
+        }
+        #truth-modal-search {
+            padding: 8px 22px;
+            border-radius: 7px;
+            background: #2563eb;
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            font-size: 1.07em;
+            align-self: flex-end;
+            margin-bottom: 12px;
+        }
+        #truth-modal-result {
+            margin-top: 7px;
+            min-height: 60px;
+            font-size: 1.1em;
+            color: #222;
+            overflow-y: auto;
+            max-height: 48vh;
+        }
+        @keyframes fadeInBg { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes popIn { from { transform: scale(0.97); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .rabbit-container { display: inline-block; cursor: pointer; transition: transform 0.18s;}
+        .rabbit-container:hover { transform: scale(1.13) rotate(-6deg);}
+        .footer-rabbit { font-size: 2.2em; margin-top: 4px; }
+        @media (max-width: 700px) {
+          #truth-modal { width: 97vw; max-width: 99vw; }
+        }
+    </style>
 </head>
-<body>
-  <!-- Legal disclaimer banner -->
-  <div class="disclaimer-banner">
-    <div class="container">
-      <p><strong>Important:</strong> CybrJustice provides legal information, not legal advice. Always consult with a qualified attorney for your specific situation.</p>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container">
-      <div class="header-content">
-        <div class="logo">
-          <h1>CybrJustice</h1>
-          <p class="tagline">Legal resources for everyone</p>
-        </div>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="#resources">Resources</a></li>
-            <li><a href="#forms">Forms</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#rights">Know Your Rights</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero section -->
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <h2>Equal Justice Shouldn't Depend on Your Bank Account</h2>
-        <p>Access free legal resources, documents, and education to help navigate the legal system. The cards aren't dealt equally—we're here to help level the playing field.</p>
-        
-        <div class="search-box">
-          <form id="search-form">
-            <input type="text" id="search-input" placeholder="Search for legal resources, forms, or information...">
-            <button type="submit">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            </button>
-          </form>
-        </div>
-        
-        <div class="quick-links">
-          <a href="#housing" class="quick-link">Housing</a>
-          <a href="#family" class="quick-link">Family</a>
-          <a href="#employment" class="quick-link">Employment</a>
-          <a href="#immigration" class="quick-link">Immigration</a>
-          <a href="#debt" class="quick-link">Debt</a>
-          <a href="#criminal" class="quick-link">Criminal</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main content -->
-  <main>
-    <!-- Resources section -->
-    <section id="resources" class="resources-section">
-      <div class="container">
-        <h2 class="section-title">Legal Resources</h2>
-        <p class="section-description">Access guides, information, and tools to help you understand your legal situation.</p>
-        
-        <div class="resource-grid">
-          <div class="resource-card">
-            <div class="resource-icon">📝</div>
-            <h3>Document Templates</h3>
-            <p>Access free templates for common legal documents.</p>
-            <a href="/resources/documents" class="resource-link">View Templates</a>
-          </div>
-          
-          <div class="resource-card">
-            <div class="resource-icon">👨‍⚖️</div>
-            <h3>Court Procedures</h3>
-            <p>Learn about court processes and what to expect.</p>
-            <a href="/resources/court" class="resource-link">Learn More</a>
-          </div>
-          
-          <div class="resource-card">
-            <div class="resource-icon">📞</div>
-            <h3>Legal Aid Directory</h3>
-            <p>Find pro bono and low-cost legal services in your area.</p>
-            <a href="/resources/aid" class="resource-link">Find Help</a>
-          </div>
-          
-          <div class="resource-card">
-            <div class="resource-icon">📚</div>
-            <h3>Legal Dictionary</h3>
-            <p>Understand complex legal terms in plain language.</p>
-            <a href="/resources/dictionary" class="resource-link">Explore Terms</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Forms section -->
-    <section id="forms" class="forms-section">
-      <div class="container">
-        <h2 class="section-title">Legal Forms</h2>
-        <p class="section-description">Download and fill out commonly needed legal forms to save time and money.</p>
-        
-        <div class="forms-container">
-          <div class="form-category">
-            <h3>Housing</h3>
-            <ul class="form-list">
-              <li><a href="/forms/housing/tenant-rights">Tenant Rights Notice</a></li>
-              <li><a href="/forms/housing/repair-request">Repair Request</a></li>
-              <li><a href="/forms/housing/security-deposit">Security Deposit Dispute</a></li>
-              <li><a href="/forms/housing/eviction-response">Eviction Response</a></li>
-            </ul>
-          </div>
-          
-          <div class="form-category">
-            <h3>Family</h3>
-            <ul class="form-list">
-              <li><a href="/forms/family/child-support">Child Support Worksheet</a></li>
-              <li><a href="/forms/family/custody">Custody Agreement Template</a></li>
-              <li><a href="/forms/family/visitation">Visitation Schedule</a></li>
-              <li><a href="/forms/family/divorce">Divorce Filing Checklist</a></li>
-            </ul>
-          </div>
-          
-          <div class="form-category">
-            <h3>Employment</h3>
-            <ul class="form-list">
-              <li><a href="/forms/employment/discrimination">Workplace Discrimination</a></li>
-              <li><a href="/forms/employment/wage-claim">Unpaid Wages Claim</a></li>
-              <li><a href="/forms/employment/harassment">Harassment Documentation</a></li>
-              <li><a href="/forms/employment/workers-comp">Workers' Compensation</a></li>
-            </ul>
-          </div>
-          
-          <div class="form-category">
-            <h3>Consumer</h3>
-            <ul class="form-list">
-              <li><a href="/forms/consumer/debt-verification">Debt Verification Letter</a></li>
-              <li><a href="/forms/consumer/credit-dispute">Credit Report Dispute</a></li>
-              <li><a href="/forms/consumer/small-claims">Small Claims Preparation</a></li>
-              <li><a href="/forms/consumer/fraud">Fraud Report Template</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="disclaimer">
-          <p>These forms are provided for informational purposes only and may need to be modified for your jurisdiction. They do not constitute legal advice.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Education section -->
-    <section id="education" class="education-section">
-      <div class="container">
-        <h2 class="section-title">Legal Education</h2>
-        <p class="section-description">Build your understanding of the legal system through free resources.</p>
-        
-        <div class="education-cards">
-          <div class="education-card">
-            <div class="education-img">
-              <img src="images/video-tutorials.jpg" alt="Video tutorials">
+<body class="font-sans antialiased text-gray-800 bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-tr from-blue-900 via-blue-700 to-blue-500 text-white">
+        <div class="container mx-auto px-4 py-16 md:py-24">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Equal Justice Shouldn't Depend on Your Bank Account</h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90">Access free legal resources, documents, and education to help navigate the legal system. The cards aren't dealt equally—we're here to help level the playing field.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#resources" class="px-6 py-3 bg-white text-blue-800 font-semibold rounded-full hover:bg-blue-50 transition">Explore Resources</a>
+                    <a href="#education" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-blue-800 transition">Learn Your Rights</a>
+                </div>
             </div>
-            <div class="education-content">
-              <h3>Video Tutorials</h3>
-              <p>Step-by-step video guides on navigating common legal processes.</p>
-              <a href="/education/videos" class="education-link">Watch Videos</a>
-            </div>
-          </div>
-          
-          <div class="education-card">
-            <div class="education-img">
-              <img src="images/guides.jpg" alt="Downloadable guides">
-            </div>
-            <div class="education-content">
-              <h3>Downloadable Guides</h3>
-              <p>Comprehensive PDF guides on various legal topics you can reference offline.</p>
-              <a href="/education/guides" class="education-link">Download Guides</a>
-            </div>
-          </div>
-          
-          <div class="education-card">
-            <div class="education-img">
-              <img src="images/webinars.jpg" alt="Webinars">
-            </div>
-            <div class="education-content">
-              <h3>Free Webinars</h3>
-              <p>Join live webinars hosted by legal professionals on rotating topics.</p>
-              <a href="/education/webinars" class="education-link">Sign Up</a>
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
+    </header>
 
-    <!-- Know Your Rights section -->
-    <section id="rights" class="rights-section">
-      <div class="container">
-        <h2 class="section-title">Know Your Rights</h2>
-        <p class="section-description">Understanding your rights is the first step to protecting them.</p>
-        
-        <div class="rights-grid">
-          <div class="rights-item">
-            <h3>Tenant Rights</h3>
-            <p>Learn about safe housing, eviction protections, and deposit returns.</p>
-            <a href="/rights/tenant" class="rights-link">Read More</a>
-          </div>
-          
-          <div class="rights-item">
-            <h3>Employment Rights</h3>
-            <p>Understand workplace protections, minimum wage, and discrimination laws.</p>
-            <a href="/rights/employment" class="rights-link">Read More</a>
-          </div>
-          
-          <div class="rights-item">
-            <h3>Consumer Rights</h3>
-            <p>Protect yourself from predatory lending, scams, and unfair practices.</p>
-            <a href="/rights/consumer" class="rights-link">Read More</a>
-          </div>
-          
-          <div class="rights-item">
-            <h3>Civil Rights</h3>
-            <p>Freedom from discrimination based on protected characteristics.</p>
-            <a href="/rights/civil" class="rights-link">Read More</a>
-          </div>
-          
-          <div class="rights-item">
-            <h3>Law Enforcement Encounters</h3>
-            <p>Know what to do and say during police interactions and arrests.</p>
-            <a href="/rights/police" class="rights-link">Read More</a>
-          </div>
-          
-          <div class="rights-item">
-            <h3>Immigration Rights</h3>
-            <p>Rights of immigrants, refugees, and non-citizens in legal matters.</p>
-            <a href="/rights/immigration" class="rights-link">Read More</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+    <!-- Main Content -->
+    <main>
+        <!-- Resources Section -->
+        <section id="resources" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Access Legal Resources</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Access guides, information, and tools to help you understand your legal situation.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="p-6">
+                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-file-contract"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Document Templates</h3>
+                            <p class="text-gray-600 mb-4">Access free templates for common legal documents.</p>
+                            <a href="https://cybrjustice.pages.dev/resources/documents" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
+                                View Templates <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="p-6">
+                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-gavel"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Court Procedures</h3>
+                            <p class="text-gray-600 mb-4">Learn about court processes and what to expect.</p>
+                            <a href="https://cybrjustice.pages.dev/resources/court" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
+                                Learn More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="p-6">
+                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-hands-helping"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Legal Aid Directory</h3>
+                            <p class="text-gray-600 mb-4">Find pro bono and low-cost legal services in your area.</p>
+                            <a href="https://cybrjustice.pages.dev/resources/aid" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
+                                Find Help <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="p-6">
+                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-book"></i></div>
+                            <h3 class="text-xl font-semibold mb-2">Legal Dictionary</h3>
+                            <p class="text-gray-600 mb-4">Understand complex legal terms in plain language.</p>
+                            <a href="https://cybrjustice.pages.dev/resources/dictionary" class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800">
+                                Explore Terms <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- Call to action -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>Need More Help?</h2>
-      <p>Connect with legal aid services in your area or join our community forum.</p>
-      <div class="cta-buttons">
-        <a href="/find-help" class="cta-button primary">Find Legal Aid</a>
-        <a href="/community" class="cta-button secondary">Join Community</a>
-      </div>
-    </div>
-  </section>
+        <!-- Legal Education Section -->
+        <section id="education" class="py-16 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Legal Education</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Build your understanding of the legal system through free resources.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="h-48 bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-video text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">Video Tutorials</h3>
+                            <p class="text-gray-600 mb-4">Step-by-step video guides on navigating common legal processes.</p>
+                            <a href="https://cybrjustice.pages.dev/education/videos" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Watch Videos <i class="fas fa-play ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="h-48 bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-file-pdf text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">Downloadable Guides</h3>
+                            <p class="text-gray-600 mb-4">Comprehensive PDF guides on various legal topics you can reference offline.</p>
+                            <a href="https://cybrjustice.pages.dev/education/guides" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Download Guides <i class="fas fa-download ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
+                        <div class="h-48 bg-blue-100 flex items-center justify-center">
+                            <i class="fas fa-chalkboard-teacher text-6xl text-blue-600"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-3">Free Webinars</h3>
+                            <p class="text-gray-600 mb-4">Join live webinars hosted by legal professionals on rotating topics.</p>
+                            <a href="https://cybrjustice.pages.dev/education/webinars" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+                                Sign Up <i class="fas fa-user-plus ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-logo">
-          <h2>CybrJustice</h2>
-          <p>Legal resources for everyone</p>
+        <!-- Know Your Rights Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Know Your Rights</h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Understanding your rights is the first step to protecting them.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-home text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Tenant Rights</h3>
+                                <p class="text-gray-600 mb-3">Learn about safe housing, eviction protections, and deposit returns.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/tenant" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-briefcase text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Employment Rights</h3>
+                                <p class="text-gray-600 mb-3">Understand workplace protections, minimum wage, and discrimination laws.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/employment" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-shopping-cart text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Consumer Rights</h3>
+                                <p class="text-gray-600 mb-3">Protect yourself from predatory lending, scams, and unfair practices.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/consumer" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-scale-balanced text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Civil Rights</h3>
+                                <p class="text-gray-600 mb-3">Freedom from discrimination based on protected characteristics.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/civil" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-shield-alt text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Law Enforcement Encounters</h3>
+                                <p class="text-gray-600 mb-3">Know what to do and say during police interactions and arrests.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/police" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-passport text-blue-600 text-xl"></i></div>
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Immigration Rights</h3>
+                                <p class="text-gray-600 mb-3">Rights of immigrants, refugees, and non-citizens in legal matters.</p>
+                                <a href="https://cybrjustice.pages.dev/rights/immigration" class="text-blue-600 font-medium hover:underline">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="py-16 bg-blue-600 text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Need More Help?</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">Our mission is to make legal information accessible to everyone, regardless of income.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#" class="px-6 py-3 bg-white text-blue-800 font-semibold rounded-full hover:bg-blue-50 transition">Contact Support</a>
+                    <a href="#" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-blue-800 transition">Volunteer With Us</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">CybrJustice</h3>
+                    <p class="text-gray-400">Legal resources and education for everyone.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Document Templates</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Court Procedures</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Legal Aid Directory</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Legal Dictionary</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Education</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Video Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Downloadable Guides</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">Free Webinars</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <p class="text-gray-400">info@cybrjustice.org</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 CybrJustice. All rights reserved.</p>
+                <div class="rabbit-container" id="footer-rabbit" title="Follow the white rabbit...">
+                    <span class="footer-rabbit">🐇</span>
+                </div>
+            </div>
         </div>
-        
-        <div class="footer-links">
-          <div class="footer-column">
-            <h3>Resources</h3>
-            <ul>
-              <li><a href="/resources/documents">Legal Documents</a></li>
-              <li><a href="/resources/court">Court Information</a></li>
-              <li><a href="/resources/aid">Find Legal Aid</a></li>
-              <li><a href="/resources/dictionary">Legal Dictionary</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-column">
-            <h3>Forms</h3>
-            <ul>
-              <li><a href="/forms/housing">Housing Forms</a></li>
-              <li><a href="/forms/family">Family Forms</a></li>
-              <li><a href="/forms/employment">Employment Forms</a></li>
-              <li><a href="/forms/consumer">Consumer Forms</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-column">
-            <h3>Education</h3>
-            <ul>
-              <li><a href="/education/videos">Video Tutorials</a></li>
-              <li><a href="/education/guides">Guides & Handbooks</a></li>
-              <li><a href="/education/webinars">Webinars</a></li>
-              <li><a href="/education/faq">FAQs</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-column">
-            <h3>About</h3>
-            <ul>
-              <li><a href="/about">About Us</a></li>
-              <li><a href="/contact">Contact</a></li>
-              <li><a href="/privacy">Privacy Policy</a></li>
-              <li><a href="/terms">Terms of Use</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      
-      <div class="footer-bottom">
-        <p>© 2025 - the truth is out there</p>
-        
-        <!-- Hidden white rabbit -->
-        <div class="rabbit-container">
-          <span id="white-rabbit">🐇</span>
-        </div>
-      </div>
-      
-      <div class="legal-disclaimer">
-        <p>DISCLAIMER: The information provided on this website does not, and is not intended to, constitute legal advice; instead, all information, content, and materials available on this site are for general informational purposes only. Information on this website may not constitute the most up-to-date legal or other information. Readers should contact their attorney to obtain advice with respect to any particular legal matter.</p>
+    </footer>
+
+    <!-- Truth Engine Modal -->
+    <div id="truth-modal-bg">
+      <div id="truth-modal">
+        <button id="truth-modal-close">&times;</button>
+        <h2>CybrJustice Truth Engine</h2>
+        <input type="text" id="truth-modal-query" placeholder="Ask your legal question..." />
+        <button id="truth-modal-search">Search</button>
+        <div id="truth-modal-result"></div>
       </div>
     </div>
-  </footer>
 
-  <!-- Hidden red pill -->
-  <div class="red-pill-container">
-    <img src="images/red-pill.png" alt="" id="red-pill" class="hidden-pill">
-  </div>
+    <script>
+    const API_BASE = 'https://justice.ai-n.workers.dev';
 
-  <script>
-    // Red pill and white rabbit handling
-    document.addEventListener('DOMContentLoaded', function() {
-      const redPill = document.getElementById('red-pill');
-      const whiteRabbit = document.getElementById('white-rabbit');
-      
-      // Show red pill on certain interactions
-      setTimeout(() => {
-        redPill.classList.add('visible-pill');
-      }, 30000); // Show after 30 seconds
-      
-      // Easter egg: Konami code shows the pill immediately
-      let konamiSequence = [];
-      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-      
-      document.addEventListener('keydown', (e) => {
-        konamiSequence.push(e.key);
-        if (konamiSequence.length > konamiCode.length) {
-          konamiSequence.shift();
-        }
-        
-        if (konamiSequence.join(',') === konamiCode.join(',')) {
-          redPill.classList.add('visible-pill');
-        }
-      });
-      
-      // Pill and rabbit click handlers
-      [redPill, whiteRabbit].forEach(el => {
-        if (el) {
-          el.addEventListener('click', () => {
-            console.log('[CYBR] Following the white rabbit...');
-            
-            // Transition effect
-            document.body.classList.add('matrix-transition');
-            
-            // Sound effect if possible
-            const matrixSound = new Audio('sounds/matrix-effect.mp3');
-            matrixSound.play().catch(e => console.log('Audio autoplay blocked'));
-            
-            // Redirect after effect
-            setTimeout(() => {
-              window.location.href = 'truth-network.html';
-            }, 2000);
-          });
-        }
-      });
+    // 1. The Rabbit: redirect to truth-network.html
+    document.getElementById('footer-rabbit').addEventListener('click', function(e) {
+      e.stopPropagation();
+      window.location.href = 'truth-network.html';
     });
-  </script>
+
+    // 2. Modal open/close functions
+    function openTruthModal(query='') {
+      document.getElementById('truth-modal-bg').style.display = 'flex';
+      const input = document.getElementById('truth-modal-query');
+      input.value = query;
+      document.getElementById('truth-modal-result').innerHTML = '';
+      setTimeout(()=>input.focus(), 120);
+      if(query) runTruthModalQuery(query);
+    }
+    function closeTruthModal() {
+      document.getElementById('truth-modal-bg').style.display = 'none';
+      document.getElementById('truth-modal-query').value = '';
+      document.getElementById('truth-modal-result').innerHTML = '';
+    }
+    document.getElementById('truth-modal-close').onclick = closeTruthModal;
+    document.getElementById('truth-modal-bg').addEventListener('click', function(e){
+      if (e.target === this) closeTruthModal();
+    });
+
+    // 3. Run the query and render in modal with unique ID prefix
+    async function runTruthModalQuery(queryText) {
+      if (!queryText || !queryText.trim()) return;
+      const resultDiv = document.getElementById('truth-modal-result');
+      resultDiv.innerHTML = `<p style="text-align:center;color:#2563eb;">Searching the truth engine...</p>`;
+      // Generate a unique id for this query
+      const uniqueId = 'cbrj-aid-' + Date.now();
+      const prefixedQuery = `[${uniqueId}] ${queryText.trim()}`;
+      try {
+        const resp = await fetch(`${API_BASE}/api/ai/truth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: prefixedQuery })
+        });
+        const data = await resp.json();
+        if (data.answer) {
+          let html = `<div><span style="color:#2563eb;font-size:.98em;font-weight:600;">Query ID: ${uniqueId}</span><br>${marked.parse(data.answer)}</div>`;
+          if (data.citations && Array.isArray(data.citations) && data.citations.length > 0) {
+            html += `<div style="margin-top:12px;"><strong>Sources:</strong><ul style="margin-bottom:0;">` +
+              data.citations.map(c =>
+                `<li><a href="${c.url}" target="_blank" rel="noopener noreferrer">${c.title || c.url}</a></li>`
+              ).join('') +
+              `</ul></div>`;
+          }
+          resultDiv.innerHTML = html;
+        } else {
+          resultDiv.innerHTML = `<p style="text-align:center;color:#444;">No direct answer found for your query. Try rephrasing.</p>`;
+        }
+      } catch (error) {
+        resultDiv.innerHTML = `<p style="text-align:center;color:#d9534f;">Error: ${error.message}<br>Could not connect to AI service.</p>`;
+      }
+    }
+
+    // 4. Modal search button and Enter key
+    document.getElementById('truth-modal-search').onclick = ()=>runTruthModalQuery(document.getElementById('truth-modal-query').value);
+    document.getElementById('truth-modal-query').addEventListener('keydown', function(e){
+      if (e.key === 'Enter') runTruthModalQuery(this.value);
+    });
+
+    // 5. Intercept all <a> clicks except the rabbit
+    document.body.addEventListener('click', function(event){
+      let anchor = event.target.closest('a');
+      if (!anchor) return;
+      // Don't override the rabbit
+      if (anchor.closest('#footer-rabbit')) return;
+      event.preventDefault();
+      // Use text or data-query if provided
+      let query = anchor.hasAttribute('data-query') ? anchor.getAttribute('data-query') : anchor.textContent.trim();
+      openTruthModal(query);
+    });
+    </script>
 </body>
 </html>
