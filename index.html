@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CybrJustice | Legal Resources For Everyone</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Serif:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  
+  <script>
+    window.A = window.A || {};
+    window.A.log = function() {
+      if (console && console.log) {
+        console.log.apply(console, ['[CYBR]'].concat(Array.from(arguments)));
+      }
+    };
+  </script>
+
+  <!-- Core system scripts -->
+  <script src="core/events.js"></script>
+  <script src="core/loader.js"></script>
+  <script src="core/registry.js"></script>
+  <script src="config.js"></script>
+  <script src="secure-config.js"></script>
+</head>
+<body>
+  <!-- Legal disclaimer banner -->
+  <div class="disclaimer-banner">
+    <div class="container">
+      <p><strong>Important:</strong> CybrJustice provides legal information, not legal advice. Always consult with a qualified attorney for your specific situation.</p>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <h1>CybrJustice</h1>
+          <p class="tagline">Legal resources for everyone</p>
+        </div>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="#resources">Resources</a></li>
+            <li><a href="#forms">Forms</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#rights">Know Your Rights</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h2>Equal Justice Shouldn't Depend on Your Bank Account</h2>
+        <p>Access free legal resources, documents, and education to help navigate the legal system. The cards aren't dealt equally—we're here to help level the playing field.</p>
+        
+        <div class="search-box">
+          <form id="search-form">
+            <input type="text" id="search-input" placeholder="Search for legal resources, forms, or information...">
+            <button type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </button>
+          </form>
+        </div>
+        
+        <div class="quick-links">
+          <a href="#housing" class="quick-link">Housing</a>
+          <a href="#family" class="quick-link">Family</a>
+          <a href="#employment" class="quick-link">Employment</a>
+          <a href="#immigration" class="quick-link">Immigration</a>
+          <a href="#debt" class="quick-link">Debt</a>
+          <a href="#criminal" class="quick-link">Criminal</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main content -->
+  <main>
+    <!-- Resources section -->
+    <section id="resources" class="resources-section">
+      <div class="container">
+        <h2 class="section-title">Legal Resources</h2>
+        <p class="section-description">Access guides, information, and tools to help you understand your legal situation.</p>
+        
+        <div class="resource-grid">
+          <div class="resource-card">
+            <div class="resource-icon">📝</div>
+            <h3>Document Templates</h3>
+            <p>Access free templates for common legal documents.</p>
+            <a href="/resources/documents" class="resource-link">View Templates</a>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-icon">👨‍⚖️</div>
+            <h3>Court Procedures</h3>
+            <p>Learn about court processes and what to expect.</p>
+            <a href="/resources/court" class="resource-link">Learn More</a>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-icon">📞</div>
+            <h3>Legal Aid Directory</h3>
+            <p>Find pro bono and low-cost legal services in your area.</p>
+            <a href="/resources/aid" class="resource-link">Find Help</a>
+          </div>
+          
+          <div class="resource-card">
+            <div class="resource-icon">📚</div>
+            <h3>Legal Dictionary</h3>
+            <p>Understand complex legal terms in plain language.</p>
+            <a href="/resources/dictionary" class="resource-link">Explore Terms</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Forms section -->
+    <section id="forms" class="forms-section">
+      <div class="container">
+        <h2 class="section-title">Legal Forms</h2>
+        <p class="section-description">Download and fill out commonly needed legal forms to save time and money.</p>
+        
+        <div class="forms-container">
+          <div class="form-category">
+            <h3>Housing</h3>
+            <ul class="form-list">
+              <li><a href="/forms/housing/tenant-rights">Tenant Rights Notice</a></li>
+              <li><a href="/forms/housing/repair-request">Repair Request</a></li>
+              <li><a href="/forms/housing/security-deposit">Security Deposit Dispute</a></li>
+              <li><a href="/forms/housing/eviction-response">Eviction Response</a></li>
+            </ul>
+          </div>
+          
+          <div class="form-category">
+            <h3>Family</h3>
+            <ul class="form-list">
+              <li><a href="/forms/family/child-support">Child Support Worksheet</a></li>
+              <li><a href="/forms/family/custody">Custody Agreement Template</a></li>
+              <li><a href="/forms/family/visitation">Visitation Schedule</a></li>
+              <li><a href="/forms/family/divorce">Divorce Filing Checklist</a></li>
+            </ul>
+          </div>
+          
+          <div class="form-category">
+            <h3>Employment</h3>
+            <ul class="form-list">
+              <li><a href="/forms/employment/discrimination">Workplace Discrimination</a></li>
+              <li><a href="/forms/employment/wage-claim">Unpaid Wages Claim</a></li>
+              <li><a href="/forms/employment/harassment">Harassment Documentation</a></li>
+              <li><a href="/forms/employment/workers-comp">Workers' Compensation</a></li>
+            </ul>
+          </div>
+          
+          <div class="form-category">
+            <h3>Consumer</h3>
+            <ul class="form-list">
+              <li><a href="/forms/consumer/debt-verification">Debt Verification Letter</a></li>
+              <li><a href="/forms/consumer/credit-dispute">Credit Report Dispute</a></li>
+              <li><a href="/forms/consumer/small-claims">Small Claims Preparation</a></li>
+              <li><a href="/forms/consumer/fraud">Fraud Report Template</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="disclaimer">
+          <p>These forms are provided for informational purposes only and may need to be modified for your jurisdiction. They do not constitute legal advice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education section -->
+    <section id="education" class="education-section">
+      <div class="container">
+        <h2 class="section-title">Legal Education</h2>
+        <p class="section-description">Build your understanding of the legal system through free resources.</p>
+        
+        <div class="education-cards">
+          <div class="education-card">
+            <div class="education-img">
+              <img src="images/video-tutorials.jpg" alt="Video tutorials">
+            </div>
+            <div class="education-content">
+              <h3>Video Tutorials</h3>
+              <p>Step-by-step video guides on navigating common legal processes.</p>
+              <a href="/education/videos" class="education-link">Watch Videos</a>
+            </div>
+          </div>
+          
+          <div class="education-card">
+            <div class="education-img">
+              <img src="images/guides.jpg" alt="Downloadable guides">
+            </div>
+            <div class="education-content">
+              <h3>Downloadable Guides</h3>
+              <p>Comprehensive PDF guides on various legal topics you can reference offline.</p>
+              <a href="/education/guides" class="education-link">Download Guides</a>
+            </div>
+          </div>
+          
+          <div class="education-card">
+            <div class="education-img">
+              <img src="images/webinars.jpg" alt="Webinars">
+            </div>
+            <div class="education-content">
+              <h3>Free Webinars</h3>
+              <p>Join live webinars hosted by legal professionals on rotating topics.</p>
+              <a href="/education/webinars" class="education-link">Sign Up</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Know Your Rights section -->
+    <section id="rights" class="rights-section">
+      <div class="container">
+        <h2 class="section-title">Know Your Rights</h2>
+        <p class="section-description">Understanding your rights is the first step to protecting them.</p>
+        
+        <div class="rights-grid">
+          <div class="rights-item">
+            <h3>Tenant Rights</h3>
+            <p>Learn about safe housing, eviction protections, and deposit returns.</p>
+            <a href="/rights/tenant" class="rights-link">Read More</a>
+          </div>
+          
+          <div class="rights-item">
+            <h3>Employment Rights</h3>
+            <p>Understand workplace protections, minimum wage, and discrimination laws.</p>
+            <a href="/rights/employment" class="rights-link">Read More</a>
+          </div>
+          
+          <div class="rights-item">
+            <h3>Consumer Rights</h3>
+            <p>Protect yourself from predatory lending, scams, and unfair practices.</p>
+            <a href="/rights/consumer" class="rights-link">Read More</a>
+          </div>
+          
+          <div class="rights-item">
+            <h3>Civil Rights</h3>
+            <p>Freedom from discrimination based on protected characteristics.</p>
+            <a href="/rights/civil" class="rights-link">Read More</a>
+          </div>
+          
+          <div class="rights-item">
+            <h3>Law Enforcement Encounters</h3>
+            <p>Know what to do and say during police interactions and arrests.</p>
+            <a href="/rights/police" class="rights-link">Read More</a>
+          </div>
+          
+          <div class="rights-item">
+            <h3>Immigration Rights</h3>
+            <p>Rights of immigrants, refugees, and non-citizens in legal matters.</p>
+            <a href="/rights/immigration" class="rights-link">Read More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Call to action -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Need More Help?</h2>
+      <p>Connect with legal aid services in your area or join our community forum.</p>
+      <div class="cta-buttons">
+        <a href="/find-help" class="cta-button primary">Find Legal Aid</a>
+        <a href="/community" class="cta-button secondary">Join Community</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">
+          <h2>CybrJustice</h2>
+          <p>Legal resources for everyone</p>
+        </div>
+        
+        <div class="footer-links">
+          <div class="footer-column">
+            <h3>Resources</h3>
+            <ul>
+              <li><a href="/resources/documents">Legal Documents</a></li>
+              <li><a href="/resources/court">Court Information</a></li>
+              <li><a href="/resources/aid">Find Legal Aid</a></li>
+              <li><a href="/resources/dictionary">Legal Dictionary</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Forms</h3>
+            <ul>
+              <li><a href="/forms/housing">Housing Forms</a></li>
+              <li><a href="/forms/family">Family Forms</a></li>
+              <li><a href="/forms/employment">Employment Forms</a></li>
+              <li><a href="/forms/consumer">Consumer Forms</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>Education</h3>
+            <ul>
+              <li><a href="/education/videos">Video Tutorials</a></li>
+              <li><a href="/education/guides">Guides & Handbooks</a></li>
+              <li><a href="/education/webinars">Webinars</a></li>
+              <li><a href="/education/faq">FAQs</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-column">
+            <h3>About</h3>
+            <ul>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Use</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2025 - the truth is out there</p>
+        
+        <!-- Hidden white rabbit -->
+        <div class="rabbit-container">
+          <span id="white-rabbit">🐇</span>
+        </div>
+      </div>
+      
+      <div class="legal-disclaimer">
+        <p>DISCLAIMER: The information provided on this website does not, and is not intended to, constitute legal advice; instead, all information, content, and materials available on this site are for general informational purposes only. Information on this website may not constitute the most up-to-date legal or other information. Readers should contact their attorney to obtain advice with respect to any particular legal matter.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Hidden red pill -->
+  <div class="red-pill-container">
+    <img src="images/red-pill.png" alt="" id="red-pill" class="hidden-pill">
+  </div>
+
+  <script>
+    // Red pill and white rabbit handling
+    document.addEventListener('DOMContentLoaded', function() {
+      const redPill = document.getElementById('red-pill');
+      const whiteRabbit = document.getElementById('white-rabbit');
+      
+      // Show red pill on certain interactions
+      setTimeout(() => {
+        redPill.classList.add('visible-pill');
+      }, 30000); // Show after 30 seconds
+      
+      // Easter egg: Konami code shows the pill immediately
+      let konamiSequence = [];
+      const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+      
+      document.addEventListener('keydown', (e) => {
+        konamiSequence.push(e.key);
+        if (konamiSequence.length > konamiCode.length) {
+          konamiSequence.shift();
+        }
+        
+        if (konamiSequence.join(',') === konamiCode.join(',')) {
+          redPill.classList.add('visible-pill');
+        }
+      });
+      
+      // Pill and rabbit click handlers
+      [redPill, whiteRabbit].forEach(el => {
+        if (el) {
+          el.addEventListener('click', () => {
+            console.log('[CYBR] Following the white rabbit...');
+            
+            // Transition effect
+            document.body.classList.add('matrix-transition');
+            
+            // Sound effect if possible
+            const matrixSound = new Audio('sounds/matrix-effect.mp3');
+            matrixSound.play().catch(e => console.log('Audio autoplay blocked'));
+            
+            // Redirect after effect
+            setTimeout(() => {
+              window.location.href = 'truth-network.html';
+            }, 2000);
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
