@@ -131,12 +131,16 @@
       pointer-events: none;
     }
     @media (max-width: 600px) {
-      .terminal-container { max-width: 99vw; }
-      .terminal-header { font-size: 1.3rem; padding: 9px 9px 0 9px;}
-      .terminal-body { padding: 9px; }
-      .result-panel { padding: 10px; font-size: 1em;}
-      .search-row { max-width: 99vw; }
-    }
+  .terminal-container { max-width: 99vw; }
+  .result-panel {
+    max-width: 99vw;
+    width: 99vw;
+    padding: 10px;
+    font-size: 1em;
+    min-height: 100px;
+    max-height: 60vh;
+  }
+}
   </style>
 </head>
 <body class="matrix">
