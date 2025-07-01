@@ -94,210 +94,212 @@
   </div>
   
   <!-- Matrix rain animation script -->
-  <script>
-    // Matrix digital rain effect
-    document.addEventListener('DOMContentLoaded', function() {
-      const canvas = document.getElementById('matrix-rain');
-      const ctx = canvas.getContext('2d');
-      
-      // Set canvas size
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      
-      // Characters for the Matrix digital rain
-      const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-      
-      // Array to track drops
-      const fontSize = 16;
-      const columns = canvas.width / fontSize;
-      const drops = [];
-      
-      // Initialize drops
-      for (let i = 0; i < columns; i++) {
-        drops[i] = 1;
-      }
-      
-      // Draw the Matrix rain
-      function draw() {
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)'; // Trail effect
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#00FF41'; // Matrix green
-        ctx.font = fontSize + 'px monospace';
-        
-        // Draw characters
-        for (let i = 0; i < drops.length; i++) {
-          // Random character
-          const text = chars.charAt(Math.floor(Math.random() * chars.length));
-          
-          // Draw the character
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-          
-          // Reset if bottom reached or random chance
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-            drops[i] = 0;
-          }
-          
-          // Move it down
-          drops[i]++;
-        }
-      }
-      
-      // Animation loop
-      setInterval(draw, 33);
-      
-      // Get references to UI elements
-      const truthInput = document.getElementById('truth-input');
-      const terminalOutput = document.getElementById('terminal-output');
-      const truthResults = document.getElementById('truth-results');
-      const confidenceLevel = document.getElementById('confidence-level');
-      const confidenceValue = document.getElementById('confidence-value');
-      const modelSelect = document.getElementById('model-select');
-      const systemPromptInput = document.getElementById('system-prompt');
-      const aiControlPanel = document.querySelector('.ai-control-panel');
-      
-      // Function to populate the model select dropdown
-      function populateModelSelect(models) {
-        modelSelect.innerHTML = '';
-        models.forEach(model => {
-          const option = document.createElement('option');
-          option.value = model.id;
-          option.textContent = model.name;
-          modelSelect.appendChild(option);
-        });
-      }
-      
-      // Function to run AI inference
-      function runAIInference(query, systemPrompt, modelId) {
-        // Add to terminal history
-        const newLine = document.createElement('p');
-        newLine.innerHTML = `> <span class="user-input">${query}</span>`;
-        terminalOutput.appendChild(newLine);
-        
-        // Clear input
-        truthInput.value = '';
-        
-        // Processing message
-        const processingLine = document.createElement('p');
-        processingLine.textContent = '> Analyzing truth patterns...';
-        terminalOutput.appendChild(processingLine);
-        
-        // Simulate truth analysis
-        setTimeout(() => {
-          // Show result
-          const resultLine = document.createElement('p');
-          resultLine.textContent = '> Analysis complete.';
-          terminalOutput.appendChild(resultLine);
-          
-          // Scroll to bottom of terminal
-          terminalOutput.scrollTop = terminalOutput.scrollHeight;
-          
-          // Show in results area
-          simulateTruthResult(query);
-        }, 1500);
-      }
-      
-      // Simulate truth result
-      function simulateTruthResult(query) {
-        // Random confidence value between 40-98%
-        const confidence = Math.floor(Math.random() * 58) + 40;
-        
-        // Update confidence meter
-        confidenceLevel.style.width = `${confidence}%`;
-        confidenceValue.textContent = `${confidence}%`;
-        
-        // Color based on confidence
-        if (confidence < 60) {
-          confidenceLevel.className = 'confidence-level low';
-        } else if (confidence < 85) {
-          confidenceLevel.className = 'confidence-level medium';
-        } else {
-          confidenceLevel.className = 'confidence-level high';
-        }
-        
-        // Create result
-        truthResults.innerHTML = `
-          <div class="truth-result-header">
-            <h3>TRUTH ANALYSIS</h3>
-            <div class="truth-metadata">
-              <span class="truth-source">SOURCES: MULTIPLE</span>
-              <span class="truth-timestamp">TIMESTAMP: ${new Date().toISOString()}</span>
-            </div>
-          </div>
-          <div class="truth-result-body">
-            <p>Query: "${query}"</p>
-            <p>The collective truth network has analyzed this statement.</p>
-            <p>Based on available information, this appears to be 
-              <span class="${confidence < 60 ? 'low-truth' : confidence < 85 ? 'partial-truth' : 'high-truth'}">
-                ${confidence < 60 ? 'POTENTIALLY MISLEADING' : confidence < 85 ? 'PARTIALLY ACCURATE' : 'HIGHLY ACCURATE'}
-              </span>.
-            </p>
-            <p>Community consensus: ${confidence}% confidence rating.</p>
-            <p>Would you like to contribute additional context or evidence?</p>
-          </div>
-        `;
-        
-        // Show results
-        truthResults.classList.add('active');
-      }
-      
-      // Function to handle terminal commands
-      function handleCommand(command) {
-        switch (command) {
-          case 'help':
-            addTerminalOutput([
-              '> Available commands:',
-              '> - help: Show available commands',
-              '> - ai-controls: Toggle AI control panel',
-              '> - run-inference: Run AI inference with current settings'
-            ]);
-            break;
-          case 'ai-controls':
-            aiControlPanel.classList.toggle('hidden');
-            break;
-          case 'run-inference':
-            const query = truthInput.value.trim();
-            if (query) {
-              runAIInference(query, systemPromptInput.value.trim(), modelSelect.value);
-            } else {
-              addTerminalOutput(['> Error: No query entered.']);
-            }
-            break;
-          default:
-            addTerminalOutput([`> Error: Unknown command '${command}'`]);
-        }
-      }
-      
-      // Function to add output to the terminal
-      function addTerminalOutput(lines) {
-        lines.forEach(line => {
-          const newLine = document.createElement('p');
-          newLine.textContent = line;
-          terminalOutput.appendChild(newLine);
-        });
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-      }
-      
-      // Event listener for terminal input
-      truthInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-          const command = truthInput.value.trim();
-          addTerminalOutput([`> <span class="user-input">${command}</span>`]);
-          handleCommand(command);
-          truthInput.value = '';
-        }
-      });
-      
-      // Populate Model Select
-      populateModelSelect([
-        { id: 'mistral/ministral-8b', name: 'Ministral 8B' },
-        { id: 'openai/gpt-4o-mini', name: 'GPT-4o mini' },
-        { id: 'google/gemini-flash-1.5-8b', name: 'Gemini Flash 1.5 8B' },
-        { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B Instruct' }
-      ]);
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<!-- Optional: For code syntax highlighting in markdown answers -->
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/lib/highlight.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Matrix rain effect (unchanged)
+  const canvas = document.getElementById('matrix-rain');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  const fontSize = 16;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+  for (let i = 0; i < columns; i++) { drops[i] = 1; }
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00FF41';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars.charAt(Math.floor(Math.random() * chars.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
+      drops[i]++;
+    }
+  }
+  setInterval(draw, 33);
+
+  // Terminal/Truth engine logic
+  const truthInput = document.getElementById('truth-input');
+  const terminalOutput = document.getElementById('terminal-output');
+  const truthResults = document.getElementById('truth-results');
+  const confidenceLevel = document.getElementById('confidence-level');
+  const confidenceValue = document.getElementById('confidence-value');
+  const modelSelect = document.getElementById('model-select');
+  const systemPromptInput = document.getElementById('system-prompt');
+  const aiControlPanel = document.querySelector('.ai-control-panel');
+
+  // Populate Model Select (unchanged)
+  function populateModelSelect(models) {
+    modelSelect.innerHTML = '';
+    models.forEach(model => {
+      const option = document.createElement('option');
+      option.value = model.id;
+      option.textContent = model.name;
+      modelSelect.appendChild(option);
     });
-  </script>
-  
+  }
+
+  // MAIN: Terminal command handler
+  function handleCommand(command) {
+    switch (command) {
+      case 'help':
+        addTerminalOutput([
+          '> Available commands:',
+          '> - help: Show available commands',
+          '> - ai-controls: Toggle AI control panel',
+          '> - run-inference: Run AI inference with current settings'
+        ]);
+        break;
+      case 'ai-controls':
+        aiControlPanel.classList.toggle('hidden');
+        break;
+      case 'run-inference':
+        // Use the value currently in the input (for legacy compatibility)
+        const query = truthInput.value.trim();
+        if (query) {
+          runAIInference(query, systemPromptInput.value.trim(), modelSelect.value);
+        } else {
+          addTerminalOutput(['> Error: No query entered.']);
+        }
+        break;
+      default:
+        // For any other command, treat as a query directly
+        if (command) {
+          runAIInference(command, systemPromptInput.value.trim(), modelSelect.value);
+        } else {
+          addTerminalOutput([`> Error: Unknown command '${command}'`]);
+        }
+    }
+  }
+
+  // Add output to terminal window
+  function addTerminalOutput(lines) {
+    lines.forEach(line => {
+      const newLine = document.createElement('p');
+      // Allow HTML if user input (for .user-input style)
+      if (line.includes('user-input')) {
+        newLine.innerHTML = line;
+      } else {
+        newLine.textContent = line;
+      }
+      terminalOutput.appendChild(newLine);
+    });
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+  }
+
+  // Terminal input event
+  truthInput.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      const command = truthInput.value.trim();
+      addTerminalOutput([`> <span class="user-input">${command}</span>`]);
+      handleCommand(command);
+      truthInput.value = '';
+    }
+  });
+
+  // The live backend query function!
+  function runAIInference(query, systemPrompt, modelId) {
+    // Add to terminal history and show processing
+    const processingLine = document.createElement('p');
+    processingLine.textContent = '> Analyzing truth patterns...';
+    terminalOutput.appendChild(processingLine);
+
+    // Clear previous results
+    truthResults.innerHTML = '';
+    truthResults.classList.remove('active');
+    confidenceLevel.style.width = '0%';
+    confidenceValue.textContent = '0%';
+
+    // API call (same as admin.html)
+    fetch('https://justice.ai-n.workers.dev/api/ai/truth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query })
+    })
+    .then(resp => resp.json())
+    .then(data => {
+      terminalOutput.removeChild(processingLine);
+
+      if (data.answer) {
+        addTerminalOutput(['> Analysis complete.']);
+        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        showTruthResult(query, data);
+      } else {
+        addTerminalOutput(['> No verified answer found.']);
+        truthResults.innerHTML = '';
+        truthResults.classList.remove('active');
+      }
+    })
+    .catch(err => {
+      terminalOutput.removeChild(processingLine);
+      addTerminalOutput(['> Error fetching answer: ' + err]);
+    });
+  }
+
+  // Show answer, citations, confidence, etc.
+  function showTruthResult(query, data) {
+    // Simulate confidence (backend does not provide)
+    let confidence = 92;
+    confidenceLevel.style.width = `${confidence}%`;
+    confidenceValue.textContent = `${confidence}%`;
+    if (confidence < 60) {
+      confidenceLevel.className = 'confidence-level low';
+    } else if (confidence < 85) {
+      confidenceLevel.className = 'confidence-level medium';
+    } else {
+      confidenceLevel.className = 'confidence-level high';
+    }
+
+    // Citations, if any
+    let citationsHtml = '';
+    if (Array.isArray(data.citations)) {
+      citationsHtml = data.citations
+        .map(
+          (c, i) =>
+            `<div style="margin-bottom:4px;"><a href="${c.url}" target="_blank" style="color:#0cf;">[${i + 1}] ${c.title || c.url}</a></div>`
+        )
+        .join('');
+    }
+
+    // Show answer using markdown
+    truthResults.innerHTML = `
+      <div class="truth-result-header">
+        <h3>TRUTH ANALYSIS</h3>
+        <div class="truth-metadata">
+          <span class="truth-source">SOURCES: ${data.citations && data.citations.length ? data.citations.length : "AI/Community"}</span>
+          <span class="truth-timestamp">TIMESTAMP: ${new Date().toISOString()}</span>
+        </div>
+      </div>
+      <div class="truth-result-body">
+        <p>Query: "${query}"</p>
+        <div>${window.marked ? marked.parse(data.answer || 'No answer provided.') : (data.answer || 'No answer provided.')}</div>
+        ${citationsHtml ? `<div style="margin-top:12px;">${citationsHtml}</div>` : ''}
+      </div>
+    `;
+    truthResults.classList.add('active');
+    // Highlight code, if present
+    if (window.hljs) {
+      truthResults.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+      });
+    }
+  }
+
+  // Populate Model Select (unchanged)
+  populateModelSelect([
+    { id: 'mistral/ministral-8b', name: 'Ministral 8B' },
+    { id: 'openai/gpt-4o-mini', name: 'GPT-4o mini' },
+    { id: 'google/gemini-flash-1.5-8b', name: 'Gemini Flash 1.5 8B' },
+    { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B Instruct' }
+  ]);
+});
+</script>
   <style>
     /* Style for hiding the AI control panel */
     .ai-control-panel.hidden {
