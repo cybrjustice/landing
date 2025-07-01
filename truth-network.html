@@ -3,313 +3,286 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Truth Network | CybrJustice</title>
+  <title>Truth Network | CybrJustice</title>
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="matrix.css">
-  
-  <!-- Keep your system scripts -->
-  <script>
-    window.A = window.A || {};
-    
-    window.A.log = function() {
-      if (console && console.log) {
-        console.log.apply(console, ['[CYBR]'].concat(Array.from(arguments)));
-      }
-    };
-  </script>
-</head>
-<body class="matrix">
-  <!-- Matrix digital rain background -->
-  <canvas id="matrix-rain"></canvas>
-  
-  <div class="interface-container">
-    <header class="matrix-header">
-      <div class="logo-container">
-        <h1 class="matrix-logo">CYBR<span>JUSTICE</span></h1>
-        <p class="matrix-subtitle">THE TRUTH NETWORK</p>
-      </div>
-    </header>
-    
-    <main>
-      <!-- AI Control Panel (Hidden by Default) -->
-      <div class="ai-control-panel hidden">
-        <div class="model-selector">
-          <label for="model-select">Select AI Model:</label>
-          <select id="model-select" class="matrix-select">
-            <!-- Models will be populated here -->
-          </select>
-        </div>
-        
-        <div class="prompt-input">
-          <label for="system-prompt">System Prompt:</label>
-          <textarea id="system-prompt" class="matrix-textarea" placeholder="Enter custom system prompt..."></textarea>
-        </div>
-      </div>
-      
-      <div class="terminal-container">
-        <div class="terminal-header">
-          <span>cybr://>root@truthengine</span>
-          <div class="terminal-controls">
-            <span class="minimize">_</span>
-            <span class="maximize">□</span>
-            <span class="close">×</span>
-          </div>
-        </div>
-        
-        <div class="terminal-body">
-          <div class="terminal-history" id="terminal-output">
-            <p>> Initializing truth protocol...</p>
-            <p>> Establishing secure connection...</p>
-            <p>> Identity verification complete.</p>
-            <p>> Welcome to the Truth Network.</p>
-            <p>> "The truth is out there, but so are lies." - Anonymous</p>
-            <p>> Type 'help' for available commands.</p>
-          </div>
-          
-          <div class="terminal-input-line">
-            <span class="prompt">$</span>
-            <input type="text" id="truth-input" class="terminal-input" placeholder="uncover the truth" autocomplete="off">
-          </div>
-        </div>
-      </div>
-      
-      <div class="truth-results" id="truth-results">
-        <!-- Results will appear here -->
-      </div>
-      
-      <div class="confidence-meter">
-        <div class="confidence-label">TRUTH CONFIDENCE</div>
-        <div class="confidence-bar">
-          <div class="confidence-level" id="confidence-level"></div>
-        </div>
-        <div class="confidence-value" id="confidence-value">0%</div>
-      </div>
-      
-      <div class="truth-controls">
-        <button class="matrix-button" id="verify-btn">VERIFY</button>
-        <button class="matrix-button" id="contribute-btn">CONTRIBUTE</button>
-        <button class="matrix-button" id="network-btn">NETWORK</button>
-      </div>
-    </main>
-  </div>
-  
-  <!-- Matrix rain animation script -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<!-- Optional: For code syntax highlighting in markdown answers -->
-<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/lib/highlight.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Matrix rain effect (unchanged)
-  const canvas = document.getElementById('matrix-rain');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-  const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-  const fontSize = 16;
-  const columns = canvas.width / fontSize;
-  const drops = [];
-  for (let i = 0; i < columns; i++) { drops[i] = 1; }
-  function draw() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#00FF41';
-    ctx.font = fontSize + 'px monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars.charAt(Math.floor(Math.random() * chars.length));
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) { drops[i] = 0; }
-      drops[i]++;
-    }
-  }
-  setInterval(draw, 33);
-
-  // Terminal/Truth engine logic
-  const truthInput = document.getElementById('truth-input');
-  const terminalOutput = document.getElementById('terminal-output');
-  const truthResults = document.getElementById('truth-results');
-  const confidenceLevel = document.getElementById('confidence-level');
-  const confidenceValue = document.getElementById('confidence-value');
-  const modelSelect = document.getElementById('model-select');
-  const systemPromptInput = document.getElementById('system-prompt');
-  const aiControlPanel = document.querySelector('.ai-control-panel');
-
-  // Populate Model Select (unchanged)
-  function populateModelSelect(models) {
-    modelSelect.innerHTML = '';
-    models.forEach(model => {
-      const option = document.createElement('option');
-      option.value = model.id;
-      option.textContent = model.name;
-      modelSelect.appendChild(option);
-    });
-  }
-
-  // MAIN: Terminal command handler
-  function handleCommand(command) {
-    switch (command) {
-      case 'help':
-        addTerminalOutput([
-          '> Available commands:',
-          '> - help: Show available commands',
-          '> - ai-controls: Toggle AI control panel',
-          '> - run-inference: Run AI inference with current settings'
-        ]);
-        break;
-      case 'ai-controls':
-        aiControlPanel.classList.toggle('hidden');
-        break;
-      case 'run-inference':
-        // Use the value currently in the input (for legacy compatibility)
-        const query = truthInput.value.trim();
-        if (query) {
-          runAIInference(query, systemPromptInput.value.trim(), modelSelect.value);
-        } else {
-          addTerminalOutput(['> Error: No query entered.']);
-        }
-        break;
-      default:
-        // For any other command, treat as a query directly
-        if (command) {
-          runAIInference(command, systemPromptInput.value.trim(), modelSelect.value);
-        } else {
-          addTerminalOutput([`> Error: Unknown command '${command}'`]);
-        }
-    }
-  }
-
-  // Add output to terminal window
-  function addTerminalOutput(lines) {
-    lines.forEach(line => {
-      const newLine = document.createElement('p');
-      // Allow HTML if user input (for .user-input style)
-      if (line.includes('user-input')) {
-        newLine.innerHTML = line;
-      } else {
-        newLine.textContent = line;
-      }
-      terminalOutput.appendChild(newLine);
-    });
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-  }
-
-  // Terminal input event
-  truthInput.addEventListener('keydown', function(event) {
-    if (event.key === 'Enter') {
-      const command = truthInput.value.trim();
-      addTerminalOutput([`> <span class="user-input">${command}</span>`]);
-      handleCommand(command);
-      truthInput.value = '';
-    }
-  });
-
-  // The live backend query function!
-  function runAIInference(query, systemPrompt, modelId) {
-    // Add to terminal history and show processing
-    const processingLine = document.createElement('p');
-    processingLine.textContent = '> Analyzing truth patterns...';
-    terminalOutput.appendChild(processingLine);
-
-    // Clear previous results
-    truthResults.innerHTML = '';
-    truthResults.classList.remove('active');
-    confidenceLevel.style.width = '0%';
-    confidenceValue.textContent = '0%';
-
-    // API call (same as admin.html)
-    fetch('https://justice.ai-n.workers.dev/api/ai/truth', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query })
-    })
-    .then(resp => resp.json())
-    .then(data => {
-      terminalOutput.removeChild(processingLine);
-
-      if (data.answer) {
-        addTerminalOutput(['> Analysis complete.']);
-        terminalOutput.scrollTop = terminalOutput.scrollHeight;
-        showTruthResult(query, data);
-      } else {
-        addTerminalOutput(['> No verified answer found.']);
-        truthResults.innerHTML = '';
-        truthResults.classList.remove('active');
-      }
-    })
-    .catch(err => {
-      terminalOutput.removeChild(processingLine);
-      addTerminalOutput(['> Error fetching answer: ' + err]);
-    });
-  }
-
-  // Show answer, citations, confidence, etc.
-  function showTruthResult(query, data) {
-    // Simulate confidence (backend does not provide)
-    let confidence = 92;
-    confidenceLevel.style.width = `${confidence}%`;
-    confidenceValue.textContent = `${confidence}%`;
-    if (confidence < 60) {
-      confidenceLevel.className = 'confidence-level low';
-    } else if (confidence < 85) {
-      confidenceLevel.className = 'confidence-level medium';
-    } else {
-      confidenceLevel.className = 'confidence-level high';
-    }
-
-    // Citations, if any
-    let citationsHtml = '';
-    if (Array.isArray(data.citations)) {
-      citationsHtml = data.citations
-        .map(
-          (c, i) =>
-            `<div style="margin-bottom:4px;"><a href="${c.url}" target="_blank" style="color:#0cf;">[${i + 1}] ${c.title || c.url}</a></div>`
-        )
-        .join('');
-    }
-
-    // Show answer using markdown
-    truthResults.innerHTML = `
-      <div class="truth-result-header">
-        <h3>TRUTH ANALYSIS</h3>
-        <div class="truth-metadata">
-          <span class="truth-source">SOURCES: ${data.citations && data.citations.length ? data.citations.length : "AI/Community"}</span>
-          <span class="truth-timestamp">TIMESTAMP: ${new Date().toISOString()}</span>
-        </div>
-      </div>
-      <div class="truth-result-body">
-        <p>Query: "${query}"</p>
-        <div>${window.marked ? marked.parse(data.answer || 'No answer provided.') : (data.answer || 'No answer provided.')}</div>
-        ${citationsHtml ? `<div style="margin-top:12px;">${citationsHtml}</div>` : ''}
-      </div>
-    `;
-    truthResults.classList.add('active');
-    // Highlight code, if present
-    if (window.hljs) {
-      truthResults.querySelectorAll('pre code').forEach(block => {
-        hljs.highlightElement(block);
-      });
-    }
-  }
-
-  // Populate Model Select (unchanged)
-  populateModelSelect([
-    { id: 'mistral/ministral-8b', name: 'Ministral 8B' },
-    { id: 'openai/gpt-4o-mini', name: 'GPT-4o mini' },
-    { id: 'google/gemini-flash-1.5-8b', name: 'Gemini Flash 1.5 8B' },
-    { id: 'meta-llama/llama-3.1-8b-instruct', name: 'Llama 3.1 8B Instruct' }
-  ]);
-});
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/lib/highlight.min.js"></script>
   <style>
-    /* Style for hiding the AI control panel */
-    .ai-control-panel.hidden {
-      display: none;
+    body.matrix {
+      background-color: #0D0208;
+      color: #00FF41;
+      font-family: 'Share Tech Mono', monospace;
+      overflow-x: hidden;
     }
-    
-    /* Style for user input in terminal */
+    /* Adjust input & button for terminal look */
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 auto 18px auto;
+      max-width: 420px;
+      width: 95vw;
+      z-index: 2;
+    }
+    .terminal-input {
+      flex: 1;
+      background: rgba(0,20,0,0.75);
+      border: 1.5px solid #00ff4160;
+      color: #fff;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: 'Share Tech Mono', monospace;
+      outline: none;
+      transition: border 0.18s, box-shadow 0.18s;
+      box-shadow: 0 2px 14px #00FF4120;
+    }
+    .terminal-input:focus {
+      border-color: #00FF41;
+      box-shadow: 0 2px 20px #00FF4140;
+    }
+    .matrix-btn {
+      background: transparent;
+      border: 1.5px solid #00FF41;
+      color: #00FF41;
+      border-radius: 6px;
+      font-size: 1.1rem;
+      font-family: 'Share Tech Mono', monospace;
+      padding: 12px 24px;
+      cursor: pointer;
+      transition: background 0.14s, color 0.14s, box-shadow 0.14s;
+      letter-spacing: 1px;
+    }
+    .matrix-btn:hover, .matrix-btn:focus {
+      background: rgba(0,255,65,0.07);
+      color: #1aff92;
+      box-shadow: 0 0 10px #00FF4135;
+    }
+    .terminal-container {
+      background: rgba(0,10,0,0.88);
+      width: 97vw;
+      max-width: 540px;
+      border-radius: 10px;
+      margin: 34px auto 0 auto;
+      box-shadow: 0 0 20px #00FF4130;
+      padding: 0;
+      z-index: 2;
+      position: relative;
+    }
+    .terminal-header {
+      text-align: left;
+      padding: 18px 24px 0 24px;
+      font-size: 2.1rem;
+      color: #00FF41;
+      letter-spacing: 2px;
+      text-shadow: 0 0 8px #00FF4170;
+      font-family: 'Share Tech Mono', monospace;
+    }
+    .terminal-body {
+      padding: 8px 24px 24px 24px;
+      min-height: 170px;
+    }
+    .terminal-history {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+      color: #00FF41;
+    }
     .user-input {
-      color: #FFFF00; /* Yellow */
+      color: #FFFF00;
+    }
+    .result-panel {
+      background: rgba(0,20,0,0.77);
+      border: 1px solid #00FF41;
+      border-radius: 10px;
+      padding: 22px 22px 18px 22px;
+      color: #ccffcc;
+      font-size: 1.08rem;
+      max-height: 40vh;
+      overflow-y: auto;
+      margin-top: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 0 12px #00ff4130;
+      animation: fadeIn 0.6s;
+      word-break: break-word;
+    }
+    .result-panel h3, .result-panel strong { color: #00FF41; }
+    .result-panel a { color: #39f7d1; text-decoration: underline; cursor: pointer; }
+    .result-panel a:hover { color: #fff; text-decoration: underline; }
+    .result-panel code, .result-panel pre {
+      background: #061205;
+      border: 1px solid #00FF4130;
+      border-radius: 5px;
+      color: #1aff92;
+      padding: 6px 10px;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1em;
+      display: block;
+      margin: 9px 0;
+    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    #matrix-rain {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 600px) {
+      .terminal-container { max-width: 99vw; }
+      .terminal-header { font-size: 1.3rem; padding: 9px 9px 0 9px;}
+      .terminal-body { padding: 9px; }
+      .result-panel { padding: 10px; font-size: 1em;}
+      .search-row { max-width: 99vw; }
     }
   </style>
+</head>
+<body class="matrix">
+  <!-- Matrix digital rain animation -->
+  <canvas id="matrix-rain"></canvas>
+  <div class="terminal-container">
+    <div class="terminal-header">cybr://>root@truthengine</div>
+    <div class="terminal-body">
+      <div class="terminal-history" id="terminal-history">
+        <p>&gt; Welcome to the Truth Network terminal.</p>
+        <p>&gt; Type your question and press Enter.</p>
+      </div>
+      <div class="search-row">
+        <input type="text" id="truth-input" class="terminal-input" placeholder="uncover the truth" autocomplete="off" />
+        <button class="matrix-btn" id="search-btn">RUN</button>
+      </div>
+      <div id="result-panel" class="result-panel" style="display:none"></div>
+    </div>
+  </div>
+  <script>
+    // Matrix rain animation
+    document.addEventListener('DOMContentLoaded', function() {
+      const canvas = document.getElementById('matrix-rain');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const chars = "アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヰヱヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      const fontSize = 16;
+      const columns = Math.floor(canvas.width / fontSize);
+      const drops = [];
+      for (let i = 0; i < columns; i++) drops[i] = 1;
+      function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#00FF41';
+        ctx.font = fontSize + "px 'Share Tech Mono', monospace";
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+      setInterval(draw, 33);
+      // Resize logic
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    });
+
+    // Terminal query logic
+    const API_BASE = 'https://justice.ai-n.workers.dev';
+    const truthInput = document.getElementById('truth-input');
+    const searchBtn = document.getElementById('search-btn');
+    const terminalHistory = document.getElementById('terminal-history');
+    const resultPanel = document.getElementById('result-panel');
+
+    function addTerminalLine(line, isUser = false) {
+      const p = document.createElement('p');
+      p.innerHTML = isUser
+        ? `&gt; <span class="user-input">${escapeHTML(line)}</span>`
+        : `&gt; ${escapeHTML(line)}`;
+      terminalHistory.appendChild(p);
+      terminalHistory.scrollTop = terminalHistory.scrollHeight;
+    }
+    function escapeHTML(str) {
+      return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[m]);
+    }
+
+    async function runQuery(queryText) {
+      if (!queryText || !queryText.trim()) return;
+      addTerminalLine(queryText, true);
+      truthInput.value = '';
+      resultPanel.style.display = 'block';
+      resultPanel.innerHTML = `<p style="text-align:center;color:#0cf;">Analyzing truth patterns...</p>`;
+      try {
+        const response = await fetch(`${API_BASE}/api/ai/truth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: queryText.trim() })
+        });
+        const data = await response.json();
+        if (data.answer) {
+          let html = `<div>${marked.parse(data.answer)}</div>`;
+          if (data.citations && Array.isArray(data.citations) && data.citations.length > 0) {
+            html += `<div style="margin-top:12px;"><strong>Sources:</strong><ul style="margin-bottom:0;">` +
+              data.citations.map(c =>
+                `<li><a href="${c.url}" target="_blank" rel="noopener noreferrer">${escapeHTML(c.title || c.url)}</a></li>`
+              ).join('') +
+              `</ul></div>`;
+          }
+          resultPanel.innerHTML = html;
+        } else {
+          resultPanel.innerHTML = `<p style="text-align:center;color:#777;">No direct answer found for your query. Try rephrasing.</p>`;
+        }
+        // Highlight code blocks
+        if (window.hljs) {
+          resultPanel.querySelectorAll('pre code').forEach(block => { hljs.highlightElement(block); });
+        }
+        // Handle internal query links
+        resultPanel.querySelectorAll('a').forEach(link => {
+          // Handle ?q= links (same page)
+          try {
+            const url = new URL(link.href, window.location.origin);
+            if (
+              url.origin === window.location.origin &&
+              url.pathname === window.location.pathname &&
+              url.searchParams.has('q')
+            ) {
+              link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const q = url.searchParams.get('q');
+                if (q) runQuery(q);
+              });
+            }
+            // Handle data-search/ links
+            if (link.getAttribute('href') && link.getAttribute('href').startsWith('data-search/')) {
+              link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const q = decodeURIComponent(link.getAttribute('href').slice('data-search/'.length));
+                if (q) runQuery(q);
+              });
+            }
+          } catch(e) {}
+        });
+      } catch (error) {
+        resultPanel.innerHTML = `<p style="text-align:center;color:#d9534f;">Error: ${escapeHTML(error.message)}<br>Could not connect to AI service.</p>`;
+      }
+    }
+
+    // Button and Enter events
+    searchBtn.addEventListener('click', () => {
+      runQuery(truthInput.value);
+    });
+    truthInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') runQuery(truthInput.value);
+    });
+
+    // On page load, check for ?q=... and run a query if found
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const q = params.get('q');
+      if (q) {
+        truthInput.value = q;
+        runQuery(q);
+      }
+    });
+  </script>
 </body>
 </html>
