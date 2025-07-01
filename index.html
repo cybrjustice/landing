@@ -1,382 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CybrJustice | Legal Resources For Everyone</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        #truth-modal-bg {
-            display: none;
-            position: fixed; inset: 0;
-            z-index: 9999;
-            background: rgba(0,0,0,0.62);
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(6px);
-            animation: fadeInBg .2s;
-        }
-        #truth-modal {
-            background: #fff;
-            width: 75vw;
-            max-width: 900px;
-            min-width: 320px;
-            max-height: 85vh;
-            min-height: 220px;
-            border-radius: 18px;
-            box-shadow: 0 8px 48px #4448;
-            padding: 28px 18px 18px 18px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            animation: popIn .18s cubic-bezier(.4,1.4,.4,1);
-            overflow-y: auto;
-        }
-        #truth-modal-close {
-            position: absolute; top: 12px; right: 14px;
-            font-size: 1.7em; color: #888; background: none;
-            border: none; cursor: pointer;
-        }
-        #truth-modal h2 {
-            margin: 0 0 16px 0;
-            font-size: 1.35em;
-            font-weight: 600;
-            color: #222;
-        }
-        #truth-modal-query {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1.5px solid #ccc;
-            border-radius: 7px;
-            margin-bottom: 15px;
-            font-size: 1.07em;
-        }
-        #truth-modal-search {
-            padding: 8px 22px;
-            border-radius: 7px;
-            background: #2563eb;
-            color: #fff;
-            font-weight: 600;
-            border: none;
-            font-size: 1.07em;
-            align-self: flex-end;
-            margin-bottom: 12px;
-        }
-        #truth-modal-result {
-            margin-top: 7px;
-            min-height: 60px;
-            font-size: 1.1em;
-            color: #222;
-            overflow-y: auto;
-            max-height: 48vh;
-        }
-        @keyframes fadeInBg { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes popIn { from { transform: scale(0.97); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .rabbit-container { display: inline-block; cursor: pointer; transition: transform 0.18s;}
-        .rabbit-container:hover { transform: scale(1.13) rotate(-6deg);}
-        .footer-rabbit { font-size: 2.2em; margin-top: 4px; }
-        @media (max-width: 700px) {
-          #truth-modal { width: 97vw; max-width: 99vw; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CybrJustice | Portal to Agency</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      background: linear-gradient(135deg, #10151c 0%, #181d2f 100%);
+    }
+    #truth-modal-bg {
+      display: none;
+      position: fixed; inset: 0;
+      z-index: 9999;
+      background: rgba(10,10,20,0.88);
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+    }
+    #truth-modal {
+      background: #181d2f;
+      width: 75vw;
+      max-width: 900px;
+      min-width: 320px;
+      max-height: 85vh;
+      min-height: 220px;
+      border-radius: 18px;
+      box-shadow: 0 8px 48px #0008;
+      padding: 28px 18px 18px 18px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      animation: popIn .18s cubic-bezier(.4,1.4,.4,1);
+      overflow-y: auto;
+      color: #e6e7f1;
+    }
+    #truth-modal-close {
+      position: absolute; top: 12px; right: 14px;
+      font-size: 1.7em; color: #7680a2; background: none;
+      border: none; cursor: pointer;
+    }
+    #truth-modal h2 {
+      margin: 0 0 16px 0;
+      font-size: 1.25em;
+      font-weight: 700;
+      color: #7dd3fc;
+      letter-spacing: 1.5px;
+    }
+    #truth-modal-query {
+      width: 100%;
+      padding: 12px 14px;
+      background: #22263d;
+      border: 1.5px solid #2d3c52;
+      border-radius: 7px;
+      margin-bottom: 15px;
+      font-size: 1.07em;
+      color: #b7c3dd;
+    }
+    #truth-modal-search {
+      padding: 8px 22px;
+      border-radius: 7px;
+      background: #7dd3fc;
+      color: #151a26;
+      font-weight: 700;
+      border: none;
+      font-size: 1.07em;
+      align-self: flex-end;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      transition: background .18s;
+    }
+    #truth-modal-search:hover { background: #38bdf8; color: #fff;}
+    #truth-modal-result {
+      margin-top: 7px;
+      min-height: 60px;
+      font-size: 1.1em;
+      color: #e0e7ef;
+      overflow-y: auto;
+      max-height: 48vh;
+    }
+    @keyframes popIn { from { transform: scale(0.97); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .rabbit-container { display: inline-block; cursor: pointer; transition: transform 0.18s;}
+    .rabbit-container:hover { transform: scale(1.13) rotate(-6deg);}
+    .footer-rabbit { font-size: 2.2em; margin-top: 4px; }
+    @media (max-width: 700px) {
+      #truth-modal { width: 97vw; max-width: 99vw; }
+    }
+    .microsite-examples code {
+      background: #22263d;
+      color: #7dd3fc;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+  </style>
 </head>
-<body class="font-sans antialiased text-gray-800 bg-gray-50">
-    <!-- Header -->
-    <header class="bg-gradient-to-tr from-blue-900 via-blue-700 to-blue-500 text-white">
-        <div class="container mx-auto px-4 py-16 md:py-24">
-            <div class="max-w-3xl mx-auto text-center">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">Equal Justice Shouldn't Depend on Your Bank Account</h1>
-                <p class="text-xl md:text-2xl mb-8 opacity-90">Access free legal resources, documents, and education to help navigate the legal system. The cards aren't dealt equally—we're here to help level the playing field.</p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#resources" class="px-6 py-3 bg-white text-blue-800 font-semibold rounded-full hover:bg-blue-50 transition"
-                       data-query="cybr-aid hero explore resources">Explore Resources</a>
-                    <a href="#education" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-blue-800 transition"
-                       data-query="cybr-aid hero learn your rights">Learn Your Rights</a>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Resources Section -->
-        <section id="resources" class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Access Legal Resources</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Access guides, information, and tools to help you understand your legal situation.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="p-6">
-                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-file-contract"></i></div>
-                            <h3 class="text-xl font-semibold mb-2">Document Templates</h3>
-                            <p class="text-gray-600 mb-4">Access free templates for common legal documents.</p>
-                            <a href="https://cybrjustice.pages.dev/resources/documents"
-                               class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800"
-                               data-query="cybr-aid document templates view templates">View Templates <i class="fas fa-arrow-right ml-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="p-6">
-                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-gavel"></i></div>
-                            <h3 class="text-xl font-semibold mb-2">Court Procedures</h3>
-                            <p class="text-gray-600 mb-4">Learn about court processes and what to expect.</p>
-                            <a href="https://cybrjustice.pages.dev/resources/court"
-                               class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800"
-                               data-query="cybr-aid court procedures learn more">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="p-6">
-                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-hands-helping"></i></div>
-                            <h3 class="text-xl font-semibold mb-2">Legal Aid Directory</h3>
-                            <p class="text-gray-600 mb-4">Find pro bono and low-cost legal services in your area.</p>
-                            <a href="https://cybrjustice.pages.dev/resources/aid"
-                               class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800"
-                               data-query="cybr-aid legal aid directory find help">Find Help <i class="fas fa-arrow-right ml-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="p-6">
-                            <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-book"></i></div>
-                            <h3 class="text-xl font-semibold mb-2">Legal Dictionary</h3>
-                            <p class="text-gray-600 mb-4">Understand complex legal terms in plain language.</p>
-                            <a href="https://cybrjustice.pages.dev/resources/dictionary"
-                               class="inline-flex items-center text-blue-600 font-medium hover:text-blue-800"
-                               data-query="cybr-aid legal dictionary explore terms">Explore Terms <i class="fas fa-arrow-right ml-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Legal Education Section -->
-        <section id="education" class="py-16 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Legal Education</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Build your understanding of the legal system through free resources.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="h-48 bg-blue-100 flex items-center justify-center">
-                            <i class="fas fa-video text-6xl text-blue-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-3">Video Tutorials</h3>
-                            <p class="text-gray-600 mb-4">Step-by-step video guides on navigating common legal processes.</p>
-                            <a href="https://cybrjustice.pages.dev/education/videos"
-                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                               data-query="cybr-aid education video tutorials watch videos">Watch Videos <i class="fas fa-play ml-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="h-48 bg-blue-100 flex items-center justify-center">
-                            <i class="fas fa-file-pdf text-6xl text-blue-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-3">Downloadable Guides</h3>
-                            <p class="text-gray-600 mb-4">Comprehensive PDF guides on various legal topics you can reference offline.</p>
-                            <a href="https://cybrjustice.pages.dev/education/guides"
-                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                               data-query="cybr-aid education downloadable guides download guides">Download Guides <i class="fas fa-download ml-2"></i></a>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden card-hover transition duration-300">
-                        <div class="h-48 bg-blue-100 flex items-center justify-center">
-                            <i class="fas fa-chalkboard-teacher text-6xl text-blue-600"></i>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-3">Free Webinars</h3>
-                            <p class="text-gray-600 mb-4">Join live webinars hosted by legal professionals on rotating topics.</p>
-                            <a href="https://cybrjustice.pages.dev/education/webinars"
-                               class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                               data-query="cybr-aid education free webinars sign up">Sign Up <i class="fas fa-user-plus ml-2"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Know Your Rights Section -->
-        <section class="py-16 bg-white">
-            <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Know Your Rights</h2>
-                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">Understanding your rights is the first step to protecting them.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-home text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Tenant Rights</h3>
-                                <p class="text-gray-600 mb-3">Learn about safe housing, eviction protections, and deposit returns.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/tenant"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid tenant rights read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-briefcase text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Employment Rights</h3>
-                                <p class="text-gray-600 mb-3">Understand workplace protections, minimum wage, and discrimination laws.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/employment"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid employment rights read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-shopping-cart text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Consumer Rights</h3>
-                                <p class="text-gray-600 mb-3">Protect yourself from predatory lending, scams, and unfair practices.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/consumer"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid consumer rights read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-scale-balanced text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Civil Rights</h3>
-                                <p class="text-gray-600 mb-3">Freedom from discrimination based on protected characteristics.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/civil"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid civil rights read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-shield-alt text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Law Enforcement Encounters</h3>
-                                <p class="text-gray-600 mb-3">Know what to do and say during police interactions and arrests.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/police"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid law enforcement encounters read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 border border-gray-200 rounded-lg rights-card">
-                        <div class="flex items-start">
-                            <div class="bg-blue-100 p-3 rounded-full mr-4"><i class="fas fa-passport text-blue-600 text-xl"></i></div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Immigration Rights</h3>
-                                <p class="text-gray-600 mb-3">Rights of immigrants, refugees, and non-citizens in legal matters.</p>
-                                <a href="https://cybrjustice.pages.dev/rights/immigration"
-                                   class="text-blue-600 font-medium hover:underline"
-                                   data-query="cybr-aid immigration rights read more">Read More</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Call to Action -->
-        <section class="py-16 bg-blue-600 text-white">
-            <div class="container mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6">Need More Help?</h2>
-                <p class="text-xl mb-8 max-w-2xl mx-auto">Our mission is to make legal information accessible to everyone, regardless of income.</p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#" class="px-6 py-3 bg-white text-blue-800 font-semibold rounded-full hover:bg-blue-50 transition"
-                       data-query="cybr-aid call to action contact support">Contact Support</a>
-                    <a href="#" class="px-6 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-blue-800 transition"
-                       data-query="cybr-aid call to action volunteer with us">Volunteer With Us</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">CybrJustice</h3>
-                    <p class="text-gray-400">Legal resources and education for everyone.</p>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer document templates">Document Templates</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer court procedures">Court Procedures</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer legal aid directory">Legal Aid Directory</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer legal dictionary">Legal Dictionary</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Education</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer video tutorials">Video Tutorials</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer downloadable guides">Downloadable Guides</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition"
-                               data-query="cybr-aid footer free webinars">Free Webinars</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Connect</h4>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition"
-                           data-query="cybr-aid footer connect facebook">Facebook</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"
-                           data-query="cybr-aid footer connect twitter">Twitter</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"
-                           data-query="cybr-aid footer connect linkedin">LinkedIn</a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"
-                           data-query="cybr-aid footer connect instagram">Instagram</a>
-                    </div>
-                    <p class="text-gray-400">info@cybrjustice.org</p>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                <p>&copy; 2025 CybrJustice. All rights reserved.</p>
-                <div class="rabbit-container" id="footer-rabbit" title="Follow the white rabbit...">
-                    <span class="footer-rabbit">🐇</span>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Truth Engine Modal -->
-    <div id="truth-modal-bg">
-      <div id="truth-modal">
-        <button id="truth-modal-close">&times;</button>
-        <h2>CybrJustice Truth Engine</h2>
-        <input type="text" id="truth-modal-query" placeholder="Ask your legal question..." />
-        <button id="truth-modal-search">Search</button>
-        <div id="truth-modal-result"></div>
+<body class="font-sans antialiased text-slate-100 bg-[#181d2f]">
+  <!-- Hero Portal Header -->
+  <header class="bg-gradient-to-b from-[#0d0e15] via-[#181d2f] to-[#22263d] text-white">
+    <div class="container mx-auto px-4 py-20 text-center">
+      <h1 class="text-4xl md:text-5xl font-black mb-8 tracking-tight drop-shadow-lg">
+        This Isn't <span class="font-light">Free Legal Education—</span><br>
+        <span class="text-sky-400">It's a Move You Can't Afford <em>Not</em> to Make.</span>
+      </h1>
+      <p class="text-xl md:text-2xl mb-10 font-mono max-w-2xl mx-auto text-sky-200/90">
+        There are things you can ignore.<br>
+        **Your rights aren't one of them.**<br>
+        This isn't charity. It's a <span class="text-sky-400">portal</span>—a threshold between surviving and thriving.<br>
+        <span class="text-sky-200/70">Step in, and you take agency. Turn away, and you let the system decide.</span>
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#resources" class="px-8 py-3 bg-sky-500 text-white font-bold rounded-full hover:bg-sky-400 shadow-lg tracking-wide transition"
+           data-query="cybr-aid portal resources access">Enter Portal</a>
+        <a href="#breakthrough" class="px-8 py-3 border-2 border-sky-300 text-sky-200 font-bold rounded-full hover:bg-sky-900 hover:text-white shadow-lg tracking-wide transition"
+           data-query="cybr-aid breakthrough narrative infrastructure">See Breakthrough</a>
+      </div>
+      <div class="mt-12 opacity-80">
+        <span class="inline-block text-lg tracking-widest text-slate-400 uppercase">No middlemen. No ads. No mercy for injustice.</span>
       </div>
     </div>
+  </header>
 
-    <script>
+  <!-- Main Content -->
+  <main>
+    <!-- Resources Section -->
+    <section id="resources" class="py-16 bg-gradient-to-br from-[#171c2b] to-[#232b44] text-slate-100">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl md:text-4xl font-bold mb-3 text-sky-200">What’s Inside the Portal?</h2>
+          <p class="text-lg text-sky-200/80 max-w-2xl mx-auto">These aren’t just resources—they’re weapons. Dead simple, always up-to-date, and built for people who don’t have time to waste.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="rounded-2xl shadow-lg bg-[#1c2336] border border-sky-800/10 transition hover:scale-105 hover:shadow-sky-500/20">
+            <div class="p-7">
+              <div class="text-sky-400 text-4xl mb-4"><i class="fas fa-file-contract"></i></div>
+              <h3 class="text-xl font-bold mb-2">Document Templates</h3>
+              <p class="text-sky-100/80 mb-4">Plug-and-play templates for common legal needs. No legalese, no guesswork.</p>
+              <a href="#" class="inline-flex items-center text-sky-300 font-medium hover:text-sky-100"
+                 data-query="cybr-aid document templates view templates">View Templates <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+          </div>
+          <div class="rounded-2xl shadow-lg bg-[#1c2336] border border-sky-800/10 transition hover:scale-105 hover:shadow-sky-500/20">
+            <div class="p-7">
+              <div class="text-sky-400 text-4xl mb-4"><i class="fas fa-gavel"></i></div>
+              <h3 class="text-xl font-bold mb-2">Court Procedures</h3>
+              <p class="text-sky-100/80 mb-4">Step-by-step breakdowns of what really happens in court. No filters, no fluff.</p>
+              <a href="#" class="inline-flex items-center text-sky-300 font-medium hover:text-sky-100"
+                 data-query="cybr-aid court procedures learn more">Learn More <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+          </div>
+          <div class="rounded-2xl shadow-lg bg-[#1c2336] border border-sky-800/10 transition hover:scale-105 hover:shadow-sky-500/20">
+            <div class="p-7">
+              <div class="text-sky-400 text-4xl mb-4"><i class="fas fa-hands-helping"></i></div>
+              <h3 class="text-xl font-bold mb-2">Legal Aid Directory</h3>
+              <p class="text-sky-100/80 mb-4">Find the right help—pro bono, low-cost, or just the right person to ask.</p>
+              <a href="#" class="inline-flex items-center text-sky-300 font-medium hover:text-sky-100"
+                 data-query="cybr-aid legal aid directory find help">Find Help <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+          </div>
+          <div class="rounded-2xl shadow-lg bg-[#1c2336] border border-sky-800/10 transition hover:scale-105 hover:shadow-sky-500/20">
+            <div class="p-7">
+              <div class="text-sky-400 text-4xl mb-4"><i class="fas fa-book"></i></div>
+              <h3 class="text-xl font-bold mb-2">Legal Dictionary</h3>
+              <p class="text-sky-100/80 mb-4">Decode the jargon. Every legal term, explained in plain English.</p>
+              <a href="#" class="inline-flex items-center text-sky-300 font-medium hover:text-sky-100"
+                 data-query="cybr-aid legal dictionary explore terms">Explore Terms <i class="fas fa-arrow-right ml-2"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Narrative Breakthrough (Microsite Query Result Example) -->
+    <section id="breakthrough" class="py-20 bg-gradient-to-br from-[#181d2f] to-[#22263d] border-t border-sky-800/30">
+      <div class="container mx-auto px-4">
+        <div class="microsite-examples max-w-3xl mx-auto text-center">
+          <h2 class="text-3xl md:text-4xl font-extrabold mb-6 text-sky-200 drop-shadow">🧩 BREAKTHROUGH: Narrative Infrastructure</h2>
+          <p class="text-lg md:text-xl mb-7 text-sky-200/80">What if every search was a signal?</p>
+          <div class="bg-[#1c2336] rounded-xl p-6 mb-7 text-left border border-sky-800/20">
+            <p class="mb-4">We’ve just redefined what a <b>link</b> is.<br>
+              <span class="text-sky-300">Not just a path — but a <b>portal</b>. Not just information — but <b>activation</b>.</span>
+            </p>
+            <ul class="list-disc pl-6 mb-4 text-sky-100/90">
+              <li>Every click is a query—personalized, decentralized, <span class="text-sky-400">sovereign</span>.</li>
+              <li>Pages don’t just display—they <b>respond</b>.</li>
+              <li>Your search becomes your <span class="text-sky-400">shield, your cipher, your map</span>.</li>
+            </ul>
+            <p class="mb-2"><b>This disrupts everything:</b></p>
+            <ul class="list-disc pl-6 text-sky-100/80">
+              <li>No more middlemen. No ads. No noise. No permission needed.</li>
+              <li><b>You</b> own the signal. <b>You</b> control the rabbit hole.</li>
+            </ul>
+            <div class="mt-6">
+              <span class="block text-xs text-sky-300/70 uppercase tracking-widest mb-2">Try a living query:</span>
+              <code>?q=breakthrough</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- More Microsite Query Result Examples -->
+    <section class="py-12 bg-gradient-to-br from-[#232b44] to-[#171c2b] text-sky-100 border-t border-sky-800/30">
+      <div class="container mx-auto px-4 microsite-examples">
+        <h2 class="text-2xl font-bold mb-5 text-center text-sky-200">Try These Portal Queries</h2>
+        <div class="grid md:grid-cols-3 gap-7">
+          <div class="bg-[#181d2f] rounded-lg p-5 border border-sky-900/30">
+            <h3 class="font-bold mb-2 text-sky-300">Legal Sovereignty</h3>
+            <p class="mb-3">Can you own your own legal story? Find out how sovereignty isn’t just a slogan—it’s a protocol.</p>
+            <code>?q=legal+sovereignty+cybr-aid</code>
+          </div>
+          <div class="bg-[#181d2f] rounded-lg p-5 border border-sky-900/30">
+            <h3 class="font-bold mb-2 text-sky-300">Consent as Contract</h3>
+            <p class="mb-3">Why does “consent” matter in every legal relationship you enter? What happens when it’s missing?</p>
+            <code>?q=consent+as+contract+cybr-aid</code>
+          </div>
+          <div class="bg-[#181d2f] rounded-lg p-5 border border-sky-900/30">
+            <h3 class="font-bold mb-2 text-sky-300">Why Truth Matters</h3>
+            <p class="mb-3">Signal vs. noise. Why “truth” is the only way to break the cycle of injustice for good.</p>
+            <code>?q=why+truth+matters+cybr-aid</code>
+          </div>
+        </div>
+        <div class="text-center mt-10 text-sky-200/70">
+          <b>Every link on this site is a living query.</b><br>
+          <span class="text-xs">Try them. Own them. Share them.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-t from-[#181d2f] to-[#10151c] text-slate-300 py-10 border-t border-sky-900/30">
+    <div class="container mx-auto px-4 text-center">
+      <div class="mb-7">
+        <span class="text-lg text-sky-400 font-bold">CybrJustice</span>
+        <span class="mx-2 text-sky-800">|</span>
+        <span class="text-sm">A Portal, Not a Product.</span>
+      </div>
+      <div class="mb-5 text-sky-300/70">
+        <span class="mr-4">© 2025 – When you’re ready to fight back, we’ll still be here.</span>
+        <div class="rabbit-container inline-block align-middle ml-3" id="footer-rabbit" title="Follow the white rabbit...">
+          <span class="footer-rabbit">🐇</span>
+        </div>
+      </div>
+      <div class="text-xs text-sky-200/40 mt-2">Not legal advice. This is an activation, not a transaction.</div>
+    </div>
+  </footer>
+
+  <!-- Truth Engine Modal -->
+  <div id="truth-modal-bg">
+    <div id="truth-modal">
+      <button id="truth-modal-close">&times;</button>
+      <h2>CybrJustice Truth Engine</h2>
+      <input type="text" id="truth-modal-query" placeholder="Ask your legal question..." />
+      <button id="truth-modal-search">Search</button>
+      <div id="truth-modal-result"></div>
+    </div>
+  </div>
+
+  <script>
     const API_BASE = 'https://justice.ai-n.workers.dev';
 
-    // 1. The Rabbit: redirect to truth-network.html
+    // RABBIT: redirect to truth-network.html
     document.getElementById('footer-rabbit').addEventListener('click', function(e) {
       e.stopPropagation();
       window.location.href = 'truth-network.html';
     });
 
-    // 2. Modal open/close functions
+    // MODAL open/close
     function openTruthModal(query='') {
       document.getElementById('truth-modal-bg').style.display = 'flex';
       const input = document.getElementById('truth-modal-query');
@@ -395,12 +288,11 @@
       if (e.target === this) closeTruthModal();
     });
 
-    // 3. Run the query and render in modal with unique ID prefix
+    // TRUTH SEARCH (with unique ID)
     async function runTruthModalQuery(queryText) {
       if (!queryText || !queryText.trim()) return;
       const resultDiv = document.getElementById('truth-modal-result');
-      resultDiv.innerHTML = `<p style="text-align:center;color:#2563eb;">Searching the truth engine...</p>`;
-      // Generate a unique id for this query
+      resultDiv.innerHTML = `<p style="text-align:center;color:#7dd3fc;">Searching the truth engine...</p>`;
       const uniqueId = 'cbrj-aid-' + Date.now();
       const prefixedQuery = `[${uniqueId}] ${queryText.trim()}`;
       try {
@@ -411,7 +303,7 @@
         });
         const data = await resp.json();
         if (data.answer) {
-          let html = `<div><span style="color:#2563eb;font-size:.98em;font-weight:600;">Query ID: ${uniqueId}</span><br>${marked.parse(data.answer)}</div>`;
+          let html = `<div><span style="color:#7dd3fc;font-size:.98em;font-weight:600;">Query ID: ${uniqueId}</span><br>${marked.parse(data.answer)}</div>`;
           if (data.citations && Array.isArray(data.citations) && data.citations.length > 0) {
             html += `<div style="margin-top:12px;"><strong>Sources:</strong><ul style="margin-bottom:0;">` +
               data.citations.map(c =>
@@ -421,30 +313,26 @@
           }
           resultDiv.innerHTML = html;
         } else {
-          resultDiv.innerHTML = `<p style="text-align:center;color:#444;">No direct answer found for your query. Try rephrasing.</p>`;
+          resultDiv.innerHTML = `<p style="text-align:center;color:#bbb;">No direct answer found for your query. Try rephrasing.</p>`;
         }
       } catch (error) {
         resultDiv.innerHTML = `<p style="text-align:center;color:#d9534f;">Error: ${error.message}<br>Could not connect to AI service.</p>`;
       }
     }
-
-    // 4. Modal search button and Enter key
     document.getElementById('truth-modal-search').onclick = ()=>runTruthModalQuery(document.getElementById('truth-modal-query').value);
     document.getElementById('truth-modal-query').addEventListener('keydown', function(e){
       if (e.key === 'Enter') runTruthModalQuery(this.value);
     });
 
-    // 5. Intercept all <a> clicks except the rabbit
+    // INTERCEPT all <a> clicks except rabbit
     document.body.addEventListener('click', function(event){
       let anchor = event.target.closest('a');
       if (!anchor) return;
-      // Don't override the rabbit
       if (anchor.closest('#footer-rabbit')) return;
       event.preventDefault();
-      // Use data-query if provided, else fallback to text
       let query = anchor.hasAttribute('data-query') ? anchor.getAttribute('data-query') : anchor.textContent.trim();
       openTruthModal(query);
     });
-    </script>
+  </script>
 </body>
 </html>
