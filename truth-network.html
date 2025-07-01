@@ -91,39 +91,27 @@
     .user-input {
       color: #FFFF00;
     }
-    .result-panel {
-      background: rgba(0,20,0,0.77);
-      border: 1px solid #00FF41;
-      border-radius: 10px;
-      padding: 28px 30px 28px 30px;
-      color: #ccffcc;
-      font-size: 1.18rem;
-      min-height: 220px;
-      min-width: 0;
-      width: 96vw;
-      max-width: 1200px;
-      max-height: 70vh;
-      overflow-y: auto;
-      margin-top: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 0 18px #00ff4133;
-      animation: fadeIn 0.6s;
-      word-break: break-word;
-    }
-    .result-panel h3, .result-panel strong { color: #00FF41; }
-    .result-panel a { color: #39f7d1; text-decoration: underline; cursor: pointer; }
-    .result-panel a:hover { color: #fff; text-decoration: underline; }
-    .result-panel code, .result-panel pre {
-      background: #061205;
-      border: 1px solid #00FF4130;
-      border-radius: 5px;
-      color: #1aff92;
-      padding: 6px 10px;
-      font-family: 'Share Tech Mono', monospace;
-      font-size: 1em;
-      display: block;
-      margin: 9px 0;
-    }
+.result-panel {
+  background: rgba(0,20,0,0.77);
+  border: 1px solid #00FF41;
+  border-radius: 10px;
+  padding: 28px 30px 28px 30px;
+  color: #ccffcc;
+  font-size: 1.18rem;
+  min-width: 0;
+  width: 80vw;           /* Wide */
+  max-width: 1200px;     /* Max width for huge screens */
+  height: 80vw;          /* Tall as wide (square) */
+  max-height: 1200px;    /* Max height for huge screens */
+  min-height: 400px;     /* Minimum height for usability */
+  overflow-y: auto;
+  margin-top: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 18px #00ff4133;
+  animation: fadeIn 0.6s;
+  word-break: break-word;
+  aspect-ratio: 1 / 1;   /* Enforce square if possible (modern browsers) */
+}
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     #matrix-rain {
       position: fixed;
